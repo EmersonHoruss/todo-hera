@@ -1,3 +1,13 @@
 {
-  "lambdaLayers": []
+  "lambdaLayers": [],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "sendbirdApiToken",
+      "environmentVariableName": "SENDBIRD_API_TOKEN"
+    },
+    {
+      "cloudFormationParameterName": "sendbirdAppId",
+      "environmentVariableName": "SENDBIRD_APP_ID"
+    }
+  ]
 }

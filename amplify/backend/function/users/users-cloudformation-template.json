@@ -23,6 +23,12 @@
     "apiusersGraphQLAPIEndpointOutput": {
       "Type": "String",
       "Default": "apiusersGraphQLAPIEndpointOutput"
+    },
+    "sendbirdApiToken": {
+      "Type": "String"
+    },
+    "sendbirdAppId": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -77,6 +83,12 @@
             },
             "REGION": {
               "Ref": "AWS::Region"
+            },
+            "SENDBIRD_API_TOKEN": {
+              "Ref": "sendbirdApiToken"
+            },
+            "SENDBIRD_APP_ID": {
+              "Ref": "sendbirdAppId"
             }
           }
         },

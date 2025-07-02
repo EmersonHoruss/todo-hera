@@ -50,6 +50,22 @@
           "resourceName": "users"
         }
       ]
+    },
+    "AMPLIFY_function_users_sendbirdApiToken": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "users"
+        }
+      ]
+    },
+    "AMPLIFY_function_users_sendbirdAppId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "users"
+        }
+      ]
     }
   }
 }
