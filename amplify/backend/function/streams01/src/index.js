@@ -1,23 +1,27 @@
 exports.handler = async (event) => {
-  console.log('📥 DynamoDB Stream Event Received');
+  console.log("📥 DynamoDB Stream Event Received");
 
   for (const record of event.Records) {
     const action = record.eventName; // INSERT, MODIFY, REMOVE
     const newImage = record.dynamodb?.NewImage;
     const oldImage = record.dynamodb?.OldImage;
 
-    if (action === 'INSERT') {
-      console.log('✅ Created Todo:');
-      console.log(formatItem(newImage));
-    } else if (action === 'MODIFY') {
-      console.log('✏️ Updated Todo:');
-      console.log('Before:', formatItem(oldImage));
-      console.log('After :', formatItem(newImage));
-    } else if (action === 'REMOVE') {
-      console.log('🗑️ Deleted Todo:');
-      console.log(formatItem(oldImage));
+    if (action === "INSERT") {
+      const user = formatItem(newImage);
+      console.log("✅ Created User:");
+      console.log(user);
+    } else if (action === "MODIFY") {
+      const before = formatItem(oldImage);
+      const after = formatItem(newImage);
+      console.log("✏️ Updated User:");
+      console.log("Before:", before);
+      console.log("After :", after);
+    } else if (action === "REMOVE") {
+      const user = formatItem(oldImage);
+      console.log("🗑️ Deleted User:");
+      console.log(user);
     } else {
-      console.log('❓ Unknown operation:', action);
+      console.log("❓ Unknown operation:", action);
     }
   }
 };
