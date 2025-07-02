@@ -15,7 +15,7 @@
       "function": {
         "users": {
           "deploymentBucketName": "amplify-users-dev-0437b-deployment",
-          "s3Key": "amplify-builds/users-496a692b736959736e7a-build.zip",
+          "s3Key": "amplify-builds/users-4a31306c6a43625a7667-build.zip",
           "sendbirdApiToken": "7dcb9fd83880b3c10e36711cfe5d6901c339aca6",
           "sendbirdAppId": "D5EA2BBA-F64A-4009-8B36-87865A57784A"
         }

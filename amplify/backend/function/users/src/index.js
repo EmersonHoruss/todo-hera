@@ -27,8 +27,8 @@ exports.handler = async (event) => {
           user_id: newUser.id,
           nickname: newUser.name,
           profile_url: "",
-          phone_number: newUser.phone,
           metadata: {
+            phone_number: newUser.phone,
             age: String(newUser.age ?? ""),
             address: newUser.address ?? "",
           },
@@ -41,6 +41,7 @@ exports.handler = async (event) => {
         });
         await sendToSendbird("PUT", `/v3/users/${newUser.id}/metadata`, {
           metadata: {
+            phone_number: newUser.phone,
             age: String(newUser.age ?? ""),
             address: newUser.address ?? "",
           },
