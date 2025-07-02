@@ -16,13 +16,13 @@
     "s3Key": {
       "Type": "String"
     },
-    "apiamplifyvueusersGraphQLAPIIdOutput": {
+    "apiusersGraphQLAPIIdOutput": {
       "Type": "String",
-      "Default": "apiamplifyvueusersGraphQLAPIIdOutput"
+      "Default": "apiusersGraphQLAPIIdOutput"
     },
-    "apiamplifyvueusersGraphQLAPIEndpointOutput": {
+    "apiusersGraphQLAPIEndpointOutput": {
       "Type": "String",
-      "Default": "apiamplifyvueusersGraphQLAPIEndpointOutput"
+      "Default": "apiusersGraphQLAPIEndpointOutput"
     }
   },
   "Conditions": {
@@ -55,12 +55,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "streams01",
+            "users",
             {
               "Fn::Join": [
                 "",
                 [
-                  "streams01",
+                  "users",
                   "-",
                   {
                     "Ref": "env"
@@ -97,12 +97,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "amplifyvueusersLambdaRole52efa468",
+            "usersLambdaRole73b917fc",
             {
               "Fn::Join": [
                 "",
                 [
-                  "amplifyvueusersLambdaRole52efa468",
+                  "usersLambdaRole73b917fc",
                   "-",
                   {
                     "Ref": "env"
@@ -173,13 +173,13 @@
         }
       }
     },
-    "LambdaTriggerPolicyTodo": {
+    "LambdaTriggerPolicyUser": {
       "DependsOn": [
         "LambdaExecutionRole"
       ],
       "Type": "AWS::IAM::Policy",
       "Properties": {
-        "PolicyName": "amplify-lambda-execution-policy-Todo",
+        "PolicyName": "amplify-lambda-execution-policy-User",
         "Roles": [
           {
             "Ref": "LambdaExecutionRole"
@@ -198,7 +198,7 @@
               ],
               "Resource": {
                 "Fn::ImportValue": {
-                  "Fn::Sub": "${apiamplifyvueusersGraphQLAPIIdOutput}:GetAtt:TodoTable:StreamArn"
+                  "Fn::Sub": "${apiusersGraphQLAPIIdOutput}:GetAtt:UserTable:StreamArn"
                 }
               }
             }
@@ -206,10 +206,10 @@
         }
       }
     },
-    "LambdaEventSourceMappingTodo": {
+    "LambdaEventSourceMappingUser": {
       "Type": "AWS::Lambda::EventSourceMapping",
       "DependsOn": [
-        "LambdaTriggerPolicyTodo",
+        "LambdaTriggerPolicyUser",
         "LambdaExecutionRole"
       ],
       "Properties": {
@@ -217,7 +217,7 @@
         "Enabled": true,
         "EventSourceArn": {
           "Fn::ImportValue": {
-            "Fn::Sub": "${apiamplifyvueusersGraphQLAPIIdOutput}:GetAtt:TodoTable:StreamArn"
+            "Fn::Sub": "${apiusersGraphQLAPIIdOutput}:GetAtt:UserTable:StreamArn"
           }
         },
         "FunctionName": {

@@ -1,6 +1,6 @@
 {
   "api": {
-    "amplifyvueusers": {
+    "users": {
       "dependsOn": [],
       "output": {
         "authConfig": {
@@ -18,7 +18,7 @@
     }
   },
   "function": {
-    "streams01": {
+    "users": {
       "build": true,
       "dependsOn": [
         {
@@ -27,7 +27,7 @@
             "GraphQLAPIEndpointOutput"
           ],
           "category": "api",
-          "resourceName": "amplifyvueusers"
+          "resourceName": "users"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -35,19 +35,19 @@
     }
   },
   "parameters": {
-    "AMPLIFY_function_streams01_deploymentBucketName": {
+    "AMPLIFY_function_users_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "streams01"
+          "resourceName": "users"
         }
       ]
     },
-    "AMPLIFY_function_streams01_s3Key": {
+    "AMPLIFY_function_users_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "streams01"
+          "resourceName": "users"
         }
       ]
     }
