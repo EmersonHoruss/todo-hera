@@ -27,8 +27,8 @@ exports.handler = async (event) => {
           user_id: newUser.id,
           nickname: newUser.name,
           profile_url: "",
+          phone_number: newUser.phone,
           metadata: {
-            phone: newUser.phone,
             age: String(newUser.age ?? ""),
             address: newUser.address ?? "",
           },
@@ -37,11 +37,14 @@ exports.handler = async (event) => {
         console.log("✏️ Updating Sendbird user:", newUser);
         await sendToSendbird("PUT", `/v3/users/${newUser.id}`, {
           nickname: newUser.name,
+          phone_number: newUser.phone,
         });
         await sendToSendbird("PUT", `/v3/users/${newUser.id}/metadata`, {
-          phone: newUser.phone,
-          age: String(newUser.age ?? ""),
-          address: newUser.address ?? "",
+          metadata: {
+            age: String(newUser.age ?? ""),
+            address: newUser.address ?? "",
+          },
+          upsert: true,
         });
       } else if (action === "REMOVE") {
         console.log("🗑️ Deleting Sendbird user:", oldUser?.id);
