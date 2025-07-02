@@ -16,5 +16,40 @@
       "providerPlugin": "awscloudformation",
       "service": "AppSync"
     }
+  },
+  "function": {
+    "streams01": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ],
+          "category": "api",
+          "resourceName": "amplifyvueusers"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_streams01_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "streams01"
+        }
+      ]
+    },
+    "AMPLIFY_function_streams01_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "streams01"
+        }
+      ]
+    }
   }
 }
