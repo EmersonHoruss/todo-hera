@@ -1,104 +1,135 @@
 <script setup>
-import * as mutations from "./graphql/mutations";
-import * as queries from "./graphql/queries";
-import { generateClient } from "aws-amplify/api";
-import { onMounted, ref } from "vue";
+import * as mutations from './graphql/mutations';
+import * as queries from './graphql/queries';
+import { generateClient } from 'aws-amplify/api';
+import { ref, onMounted } from 'vue';
 
 const client = generateClient();
 
-const name = ref("");
-const description = ref("");
-const todos = ref([]);
-const editingTodo = ref(null);
+const name = ref('');
+const phone = ref('');
+const age = ref('');
+const address = ref('');
+const users = ref([]);
+const editingUser = ref(null);
 
 async function submitForm() {
-  if (!name.value || !description.value) return;
+  if (!name.value || !phone.value || !age.value || !address.value) return;
 
-  if (editingTodo.value) {
+  const input = {
+    name: name.value,
+    phone: phone.value,
+    age: parseInt(age.value),
+    address: address.value,
+  };
+
+  if (editingUser.value) {
     await client.graphql({
-      query: mutations.updateTodo,
+      query: mutations.updateUser,
       variables: {
         input: {
-          id: editingTodo.value.id,
-          name: name.value,
-          description: description.value,
+          id: editingUser.value.id,
+          ...input,
         },
       },
     });
-    editingTodo.value = null;
+    editingUser.value = null;
   } else {
     await client.graphql({
-      query: mutations.createTodo,
-      variables: {
-        input: { name: name.value, description: description.value },
-      },
+      query: mutations.createUser,
+      variables: { input },
     });
   }
 
-  name.value = "";
-  description.value = "";
-  fetchTodos();
+  name.value = '';
+  phone.value = '';
+  age.value = '';
+  address.value = '';
+  fetchUsers();
 }
 
-async function fetchTodos() {
-  const result = await client.graphql({ query: queries.listTodos });
-  todos.value = result.data.listTodos.items;
+async function fetchUsers() {
+  const result = await client.graphql({
+    query: queries.listUsers,
+  });
+  users.value = result.data.listUsers.items;
 }
 
-async function deleteTodo(id) {
+function editUser(user) {
+  editingUser.value = user;
+  name.value = user.name;
+  phone.value = user.phone;
+  age.value = user.age;
+  address.value = user.address;
+}
+
+async function deleteUser(id) {
   await client.graphql({
-    query: mutations.deleteTodo,
+    query: mutations.deleteUser,
     variables: { input: { id } },
   });
-  fetchTodos();
-}
-
-function editTodo(todo) {
-  editingTodo.value = todo;
-  name.value = todo.name;
-  description.value = todo.description;
+  fetchUsers();
 }
 
 onMounted(() => {
-  fetchTodos();
+  fetchUsers();
 });
 </script>
 
 <template>
-  <div class="container">
-    <div class="form-container">
-      <h2>{{ editingTodo ? "Update Todo" : "Create Todo" }}</h2>
-
-      <form @submit.prevent="submitForm">
-        <label>Name</label>
-        <input v-model="name" required />
-
-        <label>Description</label>
-        <input v-model="description" required />
-
-        <button type="submit">
-          {{ editingTodo ? "Update" : "Create" }}
+  <div class="flex flex-col md:flex-row gap-6 p-6 min-h-screen bg-gray-100">
+    <!-- Form Section -->
+    <div class="w-full md:w-1/3 bg-white p-6 rounded-xl shadow">
+      <h2 class="text-2xl font-semibold mb-4">
+        {{ editingUser ? 'Update User' : 'Create User' }}
+      </h2>
+      <form @submit.prevent="submitForm" class="space-y-4">
+        <div>
+          <label class="block font-medium">Name</label>
+          <input v-model="name" type="text" class="w-full border px-3 py-2 rounded" required />
+        </div>
+        <div>
+          <label class="block font-medium">Phone</label>
+          <input v-model="phone" type="text" class="w-full border px-3 py-2 rounded" required />
+        </div>
+        <div>
+          <label class="block font-medium">Age</label>
+          <input v-model="age" type="number" class="w-full border px-3 py-2 rounded" required />
+        </div>
+        <div>
+          <label class="block font-medium">Address</label>
+          <input v-model="address" type="text" class="w-full border px-3 py-2 rounded" required />
+        </div>
+        <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
+          {{ editingUser ? 'Update' : 'Create' }}
         </button>
       </form>
     </div>
 
-    <div class="table-container">
-      <h2>Todos</h2>
-      <table>
+    <!-- Table Section -->
+    <div class="w-full md:w-2/3 bg-white p-6 rounded-xl shadow overflow-x-auto">
+      <h2 class="text-2xl font-semibold mb-4">Users</h2>
+      <table class="w-full table-auto border-collapse">
         <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Actions</th>
+          <tr class="bg-gray-200 text-left">
+            <th class="p-2">Name</th>
+            <th class="p-2">Phone</th>
+            <th class="p-2">Age</th>
+            <th class="p-2">Address</th>
+            <th class="p-2">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="todo in todos" :key="todo.id">
-            <td>{{ todo.name }}</td>
-            <td>{{ todo.description }}</td>
-            <td>
-              <button class="edit" @click="editTodo(todo)">Edit</button>
-              <button class="delete" @click="deleteTodo(todo.id)">
+          <tr v-for="user in users" :key="user.id" class="border-t hover:bg-gray-100">
+            <td class="p-2">{{ user.name }}</td>
+            <td class="p-2">{{ user.phone }}</td>
+            <td class="p-2">{{ user.age }}</td>
+            <td class="p-2">{{ user.address }}</td>
+            <td class="p-2 space-x-2">
+              <button @click="editUser(user)" class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">
+                Edit
+              </button>
+              <button @click="deleteUser(user.id)" class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">
                 Delete
               </button>
             </td>
@@ -108,105 +139,3 @@ onMounted(() => {
     </div>
   </div>
 </template>
-
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f3f3f3;
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh;
-}
-
-.container {
-  display: flex;
-  gap: 30px;
-}
-
-.form-container,
-.table-container {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  width: 100%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-  margin-top: 0;
-  margin-bottom: 20px;
-  font-size: 20px;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-form label {
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-form input {
-  margin-bottom: 15px;
-  padding: 8px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-form button {
-  background-color: #2e7d32;
-  color: white;
-  padding: 10px;
-  border: none;
-  font-weight: bold;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-form button:hover {
-  background-color: #1b5e20;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-table th,
-table td {
-  text-align: left;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-
-button.edit {
-  background-color: #1976d2;
-  color: white;
-  border: none;
-  padding: 6px 10px;
-  margin-right: 6px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button.edit:hover {
-  background-color: #0d47a1;
-}
-
-button.delete {
-  background-color: #d32f2f;
-  color: white;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button.delete:hover {
-  background-color: #b71c1c;
-}
-</style>

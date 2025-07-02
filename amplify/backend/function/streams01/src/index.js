@@ -1,15 +1,33 @@
+exports.handler = async (event) => {
+  console.log('📥 DynamoDB Stream Event Received');
 
-
-
-/**
- * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
- */
-exports.handler = event => {
-  console.log(`EVENT: ${JSON.stringify(event)}`);
   for (const record of event.Records) {
-    console.log(record.eventID);
-    console.log(record.eventName);
-    console.log('DynamoDB Record: %j', record.dynamodb);
+    const action = record.eventName; // INSERT, MODIFY, REMOVE
+    const newImage = record.dynamodb?.NewImage;
+    const oldImage = record.dynamodb?.OldImage;
+
+    if (action === 'INSERT') {
+      console.log('✅ Created Todo:');
+      console.log(formatItem(newImage));
+    } else if (action === 'MODIFY') {
+      console.log('✏️ Updated Todo:');
+      console.log('Before:', formatItem(oldImage));
+      console.log('After :', formatItem(newImage));
+    } else if (action === 'REMOVE') {
+      console.log('🗑️ Deleted Todo:');
+      console.log(formatItem(oldImage));
+    } else {
+      console.log('❓ Unknown operation:', action);
+    }
   }
-  return Promise.resolve('Successfully processed DynamoDB record');
 };
+
+// Converts DynamoDB item format to plain JS object
+function formatItem(dynamoItem) {
+  const result = {};
+  for (const key in dynamoItem) {
+    const dataType = Object.keys(dynamoItem[key])[0]; // e.g., 'S', 'N'
+    result[key] = dynamoItem[key][dataType];
+  }
+  return result;
+}

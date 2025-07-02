@@ -18,7 +18,7 @@
       "function": {
         "streams01": {
           "deploymentBucketName": "amplify-amplifyvueusers-dev-b8658-deployment",
-          "s3Key": "amplify-builds/streams01-6d3071684b6e764f6149-build.zip"
+          "s3Key": "amplify-builds/streams01-2f75686a4f69526f7039-build.zip"
         }
       }
     }
