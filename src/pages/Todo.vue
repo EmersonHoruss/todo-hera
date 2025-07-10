@@ -46,7 +46,7 @@ async function fetchtodos() {
   const result = await client.graphql({
     query: queries.listTodos,
   });
-  todos.value = result.data.listtodos.items;
+  todos.value = result.data.listTodos.items;
 }
 
 function editTodo(todo) {
