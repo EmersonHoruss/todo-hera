@@ -64,5 +64,39 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
+  },
+  "parameters": {
+    "AMPLIFY_function_users_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "users"
+        }
+      ]
+    },
+    "AMPLIFY_function_users_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "users"
+        }
+      ]
+    },
+    "AMPLIFY_function_users_sendbirdApiToken": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "users"
+        }
+      ]
+    },
+    "AMPLIFY_function_users_sendbirdAppId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "users"
+        }
+      ]
+    }
   }
 }
