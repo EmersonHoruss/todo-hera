@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "api": {
+      "users": [
+        "Query"
+      ]
+    },
+    "function": {
+      "users": [
+        "read"
+      ]
+    },
+    "storage": {
+      "User:@model(appsync)": [
+        "read"
+      ],
+      "Todo:@model(appsync)": [
+        "read"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}
