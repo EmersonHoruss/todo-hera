@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import User from "./User.vue";
-import Todo from "./Todo.vue";
+import User from "./pages/User.vue";
+import Todo from "./pages/Todo.vue";
 
 const routes = [
   { path: "/users", component: User },
