@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <h1>My App</h1>
+    <h1>Hera</h1>
     <nav>
       <button @click="$router.push('/users')">Users</button>
       <button @click="$router.push('/todos')">Todos</button>
