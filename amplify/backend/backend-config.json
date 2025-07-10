@@ -66,6 +66,22 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_test2triggers_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "test2triggers"
+        }
+      ]
+    },
+    "AMPLIFY_function_test2triggers_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "test2triggers"
+        }
+      ]
+    },
     "AMPLIFY_function_users_deploymentBucketName": {
       "usedBy": [
         {

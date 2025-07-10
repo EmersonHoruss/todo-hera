@@ -19,7 +19,10 @@
           "sendbirdApiToken": "7dcb9fd83880b3c10e36711cfe5d6901c339aca6",
           "sendbirdAppId": "D5EA2BBA-F64A-4009-8B36-87865A57784A"
         },
-        "test2triggers": {}
+        "test2triggers": {
+          "deploymentBucketName": "amplify-users-dev-0437b-deployment",
+          "s3Key": "amplify-builds/test2triggers-5546616d4363642f4c62-build.zip"
+        }
       },
       "api": {
         "users": {}
