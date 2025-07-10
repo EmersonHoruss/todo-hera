@@ -1,4 +1,4 @@
-type User @model {
+type User @model @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String!
   phone: String!
@@ -6,7 +6,7 @@ type User @model {
   address: String
 }
 
-type Todo @model {
+type Todo @model @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String!
   description: String
