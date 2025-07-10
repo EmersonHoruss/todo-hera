@@ -28,5 +28,35 @@
         "users": {}
       }
     }
+  },
+  "env": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-users-env-6136e-authRole",
+      "UnauthRoleArn": "arn:aws:iam::336931396829:role/amplify-users-env-6136e-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::336931396829:role/amplify-users-env-6136e-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-users-env-6136e-deployment",
+      "UnauthRoleName": "amplify-users-env-6136e-unauthRole",
+      "StackName": "amplify-users-env-6136e",
+      "StackId": "arn:aws:cloudformation:us-east-1:336931396829:stack/amplify-users-env-6136e/e8045a00-5dd2-11f0-acd0-126a8d2abd03",
+      "AmplifyAppId": "d2jrr2546ir0xo"
+    },
+    "categories": {
+      "function": {
+        "test2triggers": {
+          "deploymentBucketName": "amplify-users-env-6136e-deployment",
+          "s3Key": "amplify-builds/test2triggers-742b59544b4f344b4a63-build.zip"
+        },
+        "users": {
+          "deploymentBucketName": "amplify-users-env-6136e-deployment",
+          "s3Key": "amplify-builds/users-616f7755636169673553-build.zip",
+          "sendbirdApiToken": "7dcb9fd83880b3c10e36711cfe5d6901c339aca6",
+          "sendbirdAppId": "D5EA2BBA-F64A-4009-8B36-87865A57784A"
+        }
+      },
+      "api": {
+        "users": {}
+      }
+    }
   }
 }
