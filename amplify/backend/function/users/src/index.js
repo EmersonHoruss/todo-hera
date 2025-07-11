@@ -12,6 +12,10 @@ exports.handler = async (event) => {
     const newImage = record.dynamodb?.NewImage;
     const oldImage = record.dynamodb?.OldImage;
 
+    console.log("*** TYPE ***");
+    console.log(newImage?.__typename?.S);
+    console.log(oldImage?.__typename?.S);
+
     const newUser = newImage ? formatItem(newImage) : null;
     const oldUser = oldImage ? formatItem(oldImage) : null;
 
